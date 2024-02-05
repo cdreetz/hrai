@@ -1,15 +1,25 @@
 'use client'
 
 import { ColumnDef } from "@tanstack/react-table"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-export type Payment = {
+export function ButtonLink() {
+  return (
+    <Button asChild>
+      <Link href="/job">Job</Link>
+    </Button>
+  );
+}
+
+export type Applicant = {
   id: string
   amount: number
-  status: "pending" | "success"
+  status: string 
   email: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const applicantcolumns: ColumnDef<Applicant>[] = [
   {
     accessorKey: "status",
     header: "Status",
@@ -23,3 +33,26 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Amount",
   },
 ]
+
+export type JobPost = {
+  id: string
+  role: string
+  link: string
+}
+
+export const jobcolumns: ColumnDef<JobPost>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+  },
+  {
+    accessorKey: "link",
+    header: "Link",
+    cell: () => <ButtonLink />,
+  },
+]
+

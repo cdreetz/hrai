@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Payment, columns } from "./columns";
+import { Applicant, applicantcolumns, JobPost, jobcolumns } from "./columns";
 import { PaymentRank, columnsrank } from "./columnsrank";
 import { DataTable } from "./data-table";
 import {
@@ -27,30 +27,22 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import { payments, rankedPayments } from "../../data/payments";
+import { myJobs } from "../../data/jobs";
 
 
-async function getData(): Promise<Payment[]> {
-  return [
-    {
-      id: "77188273",
-      amount: 100,
-      status: "pending",
-      email: "m@email.com",
-    },
-  ]
-}
+//async function getData(): Promise<Payment[]> {
+//  return [
+//    {
+//      id: "77188273",
+//      amount: 100,
+//      status: "pending",
+//      email: "m@email.com",
+//    },
+//  ]
+//}
 
-async function getDataRanked(): Promise<PaymentRank[]> {
-  return [
-    {
-      id: "77188273",
-      amount: 100,
-      status: "pending",
-      email: "m@email.com",
-      rank: 1,
-    },
-  ]
-}
+
 
 interface DataCardProps {
   title: string;
@@ -91,10 +83,7 @@ function SecondCards() {
 }
 
 
-
-async function DashboardTabs() {
-  const data = await getData()
-  const datarank = await getDataRanked()
+function DashboardTabs() {
   return (
     <Tabs defaultValue="Overview">
       <TabsList className="grid w-[800px] grid-cols-5">
@@ -108,12 +97,13 @@ async function DashboardTabs() {
         <TopCards />
         <div style={{marginTop: '10px'}}></div>
         <SecondCards />
-        <DataTable columns={columnsrank} data={datarank} />
+        <DataTable columns={columnsrank} data={rankedPayments} />
       </TabsContent>
-      <TabsContent value="Chat">
+      <TabsContent value="Jobs">
+        <DataTable columns={jobcolumns} data={myJobs} />
       </TabsContent>
       <TabsContent value="Applicants">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={applicantcolumns} data={payments} />
       </TabsContent>
     </Tabs>
   )

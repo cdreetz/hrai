@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 export type PaymentRank = {
   id: string
   amount: number
-  status: "pending" | "success"
+  status: string 
   email: string
   rank: number
 }
