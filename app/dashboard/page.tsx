@@ -28,7 +28,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { payments, rankedPayments } from "../../data/payments";
-import { myJobs } from "../../data/jobs";
+import { myJobs, jobData } from "../../data/jobs";
 
 
 //async function getData(): Promise<Payment[]> {
@@ -121,7 +121,7 @@ export default function Dashboard() {
         justifyContent: 'center',
         margin: '0 auto',
         gap: '10px',
-        paddingTop: '80px'
+        paddingTop: '20px'
       }}>
         <h1 style={{fontSize: '3em', fontWeight: 'bold'}}>
           Your Dashboard

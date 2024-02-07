@@ -69,7 +69,7 @@ export default function Home({
   };
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
+    <main className="flex min-h-screen flex-col items-center pt-40">
       <Login />
     </main>
   );

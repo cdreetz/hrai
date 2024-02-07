@@ -21,6 +21,13 @@ export default function Navigation() {
       <NavigationMenu orientation="vertical">
         <NavigationMenuList>
           <NavigationMenuItem>
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()} style={{fontSize: '12px'}}>
+                Home
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link href="/dashboard" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()} style={{fontSize: '12px'}}>
                 Dashboard

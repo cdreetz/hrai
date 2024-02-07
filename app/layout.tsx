@@ -12,13 +12,16 @@ export const metadata: Metadata = {
 
 function HeaderBar() {
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'flex-end',
-      borderBottom: '1px solid #000'
-    }}>
-      <Navigation />
-    </div>
+    <>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        borderBottom: '1px solid #000'
+      }}>
+        <Navigation />
+      </div>
+      <div style={{padding: '30px'}}></div>
+    </>
   )
 }
 
