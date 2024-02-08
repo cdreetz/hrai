@@ -11,13 +11,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Applicant, applicantcolumns, JobPost, jobcolumns } from "./columns";
 import { PaymentRank, columnsrank } from "./columnsrank";
 import { DataTable } from "./data-table";

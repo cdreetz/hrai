@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 // swap out next auth for supabase auth
 // use supabase client component thing
 
-export function Login() {
+function Login() {
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
       <Input type="email" placeholder="Email" />

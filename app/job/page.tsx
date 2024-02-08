@@ -5,7 +5,7 @@ import { jobData } from '../../data/jobs';
 import { Button } from '@/components/ui/button';
 import Link from "next/link";
 
-export function ButtonLink() {
+function ButtonLink() {
   return (
     <Button asChild>
       <Link href="/apply">Apply Here</Link>
