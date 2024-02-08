@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/tabs";
 import { payments, rankedPayments } from "../../data/payments";
 import { myJobs, jobData } from "../../data/jobs";
-
+import Chat from "@/components/chat";
 
 //async function getData(): Promise<Payment[]> {
 //  return [
@@ -75,6 +75,13 @@ function SecondCards() {
   );
 }
 
+function ChatTab() {
+  return (
+    <div className="flex items-center">
+      <Chat />
+    </div>
+  )
+}
 
 function DashboardTabs() {
   return (
@@ -97,6 +104,9 @@ function DashboardTabs() {
       </TabsContent>
       <TabsContent value="Applicants">
         <DataTable columns={applicantcolumns} data={payments} />
+      </TabsContent>
+      <TabsContent value="Chat">
+        <ChatTab />
       </TabsContent>
     </Tabs>
   )
