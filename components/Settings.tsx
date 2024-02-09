@@ -1,61 +1,52 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/34gn9SLmO3o
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+import React from 'react';
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { cookies } from 'next/headers';
+// import { createClient } from '@/utils/supabase/server';
 
-
-interface Job {
-  title: string;
-  company: string;
-  tags: string[];
-  summary: string;
-  requirements: string[];
-  description: string;
-  benefitsDescription: string;
+interface AccountSettingsProp {
+  email: string,
 }
 
-export default function JobPost({ job }: { job: Job }) {
+function AccountSettings({ email }: AccountSettingsProp) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto">
-      <div className="flex justify-between items-start mb-4 border-b border-gray-200 pb-4">
-        <div>
-          <h2 className="text-2xl font-bold">{job.title}</h2>
-          <p className="text-sm text-gray-500">{job.company}</p>
+    <Card>
+    <CardHeader>
+      <CardTitle>Account Settings</CardTitle>
+      <CardDescription>Manage your account settings.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <form className="flex flex-col gap-4">
+        <div className="space-y-2 w-3/2">
+          <Label htmlFor="username">Username</Label>
+          <Input id="username" placeholder={email ? email : "Enter your email"} type="email" />
         </div>
-      </div>
-      <div className="flex items-center space-x-2 my-4 border-b border-gray-200 pb-4">
-        {job?.tags?.map((tags, index) => (
-          <Badge key={index} variant="secondary">{tags}</Badge>
-        )) || []}
-      </div>
-      <div className="my-4 border-b border-gray-200 pb-4">
-        <h3 className="text-lg font-semibold">Job highlights</h3>
-        <p className="text-sm text-gray-500">{job.summary}</p>
-      </div>
-      <div className="my-4 border-b border-gray-200 pb-4">
-        <h4 className="font-semibold">Qualifications</h4>
-        <ul className="list-disc pl-5 space-y-1">
-          {job?.requirements?.map((requirement, index) => (
-            <li key={index}>{requirement}</li>
-          )) || []}
-        </ul>
-      </div>
-      <div className="my-4 border-b border-gray-200 pb-4">
-        <h4 className="font-semibold">Responsibilities</h4>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>{job.description}</li>
-        </ul>
-      </div>
-      <div className="my-4">
-        <h3 className="text-lg font-semibold">Benefits</h3>
-        <p className="text-sm text-gray-500">
-          {job.benefitsDescription}
-        </p>
-      </div>
+        <div className="space-y-2 w-3/2">
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" placeholder="Enter your password" type="password" />
+        </div>
+      </form>
+    </CardContent>
+    <CardFooter className="border-t p-6">
+      <Button>Save</Button>
+    </CardFooter>
+  </Card>
+  )
+}
+
+export default async function Settings() {
+  // const cookieStore = cookies();
+  // const supabase = createClient(cookieStore);
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
+  return (
+    <div className="grid gap-6 w-1/2">
+      <AccountSettings email='Your email'/>
     </div>
   )
 }
 
+// <AccountSettings email={user?.email || ""}/>

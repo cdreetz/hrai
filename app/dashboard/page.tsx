@@ -23,6 +23,7 @@ import {
 import { payments, rankedPayments } from "../../data/payments";
 import { myJobs, jobData } from "../../data/jobs";
 import Chat from "@/components/chat";
+import Settings from "@/components/Settings";
 
 //async function getData(): Promise<Payment[]> {
 //  return [
@@ -83,6 +84,14 @@ function ChatTab() {
   )
 }
 
+function SettingsTab() {
+  return (
+    <div className='flex items-center'>
+      <Settings />
+    </div>
+  )
+}
+
 function DashboardTabs() {
   return (
     <Tabs defaultValue="Overview">
@@ -107,6 +116,9 @@ function DashboardTabs() {
       </TabsContent>
       <TabsContent value="Chat">
         <ChatTab />
+      </TabsContent>
+      <TabsContent value="Settings">
+        <SettingsTab />
       </TabsContent>
     </Tabs>
   )
