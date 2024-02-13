@@ -1,0 +1,32 @@
+.date-page-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Set max gap */
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  padding: 0 1rem; /* Adds padding on the left and right */
+}
+
+.event-details {
+  width: 100%; /* Ensures full width taking into account the padding */
+  max-width: 600px; /* Maximum width for larger screens */
+}
+
+.calendar-demo {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  /* Adjustments for screens wider than 768px */
+  .event-details {
+    flex: 1;
+    width: calc(50% - 0.5rem); /* Adjusts width to account for the gap */
+  }
+  .calendar-demo {
+    display: inline-block;
+    box-sizing: border-box;
+  }
+  .date-page-container {
+    padding: 0 2rem; /* Optional: Increase padding for larger screens */
+  }
+}
