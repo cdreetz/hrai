@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/router";
 
 
 const openai = new OpenAI({
@@ -66,6 +67,8 @@ function TextAreaComponent({ onSubmit, textValue, setTextValue }: TextAreaCompon
 
 
 export default function Chat() {
+  const router = useRouter();
+  const { applicationId } = router.query;
   // Initialize the conversation with the assistant's greeting message
   const initialMessages = [
     { role: "system", content: "You are a helpful assistant tasked with screening job candidates for a machine learning engineer role. It is an entry level role and candidates should be familiar with both model training and model deployment. We need to assess for technical skills, coding skills, behavioral skills, and problem solving skills. Questions should begin with 'Tell me about a time..' or 'Walk me through how you would...' and you should only ask one question at a time." },

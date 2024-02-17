@@ -20,7 +20,7 @@ type ScrollAreaDemoProps = {
 
 function ScrollAreaDemo({ items }: ScrollAreaDemoProps) {
   return (
-    <ScrollArea className="h-72 w-full rounded-md border w-3/4" >
+    <ScrollArea className="h-72 w-full rounded-md border" >
       <div className="p-4">
         <h4 className="mb-4 text-sm font-medium leading-none">Messages</h4>
         {items.map((item, index) => (
@@ -51,7 +51,7 @@ function TextAreaComponent({ onSubmit, textValue, setTextValue }: TextAreaCompon
     }
   };
   return (
-    <div className="grid w-full gap-2 w-3/4 mt-2">
+    <div className="grid w-full gap-2 mt-2">
       <Textarea
         placeholder="Type message here"
         value={textValue}
@@ -105,7 +105,7 @@ export default function Chat() {
 
   return (
     <div>
-      <div className="h-screen flex flex-col items-center">
+      <div className="h-screen flex flex-col items-center mx-auto w-3/4">
         <ScrollAreaDemo items={items} />
         <TextAreaComponent onSubmit={handleSubmit} textValue={textValue} setTextValue={setTextValue} />
       </div>

@@ -34,6 +34,32 @@ export const applicantcolumns: ColumnDef<Applicant>[] = [
   },
 ]
 
+export type JobApplicant = {
+  id: string
+  first_name: string
+  last_name: string
+  email: string
+}
+
+export const jobapplicantcolumns: ColumnDef<Applicant>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "first_name",
+    header: "First Name",
+  },
+  {
+    accessorKey: "last_name",
+    header: "Last Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+]
+
 export type JobPost = {
   id: string
   role: string

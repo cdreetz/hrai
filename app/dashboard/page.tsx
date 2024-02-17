@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Applicant, applicantcolumns, JobPost, jobcolumns } from "./columns";
+import { Applicant, applicantcolumns, JobPost, jobcolumns, JobApplicant, jobapplicantcolumns } from "./columns";
 import { PaymentRank, columnsrank } from "./columnsrank";
 import { DataTable } from "./data-table";
 import {
@@ -24,6 +24,8 @@ import { payments, rankedPayments } from "../../data/payments";
 import { myJobs, jobData } from "../../data/jobs";
 import Chat from "@/components/chat";
 import Settings from "@/components/Settings";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 //async function getData(): Promise<Payment[]> {
 //  return [
@@ -92,7 +94,7 @@ function SettingsTab() {
   )
 }
 
-function DashboardTabs() {
+async function DashboardTabs() {
   return (
     <Tabs defaultValue="Overview">
       <TabsList className="grid w-[800px] grid-cols-5">
@@ -112,7 +114,7 @@ function DashboardTabs() {
         <DataTable columns={jobcolumns} data={myJobs} />
       </TabsContent>
       <TabsContent value="Applicants">
-        <DataTable columns={applicantcolumns} data={payments} />
+        <DataTable columns={jobapplicantcolumns} data={await ApplicantListData() || []} />
       </TabsContent>
       <TabsContent value="Chat">
         <ChatTab />
@@ -124,7 +126,29 @@ function DashboardTabs() {
   )
 }
 
+async function ApplicantListDataExample() {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
 
+  const { data: applicants } = await supabase.from('applicants_table').select()
+  return (
+    <ul>
+      {applicants?.map((applicant) => (
+        <li key={applicant.id}>
+          <span>{applicant.first_name} {applicant.last_name} - {applicant.email}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+async function ApplicantListData() {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+
+  const { data: applicants } = await supabase.from('applicants_table').select()
+  return applicants;
+}
 
 export default function Dashboard() {
   return (
@@ -142,6 +166,7 @@ export default function Dashboard() {
           Your Dashboard
         </h1>
         <DashboardTabs />
+        <ApplicantListDataExample />
       </div>
     </div>
   );
