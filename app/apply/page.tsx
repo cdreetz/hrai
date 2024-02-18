@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/router";
+
 
 const supabase = createClient()
 
@@ -26,8 +26,8 @@ const formSchema = z.object({
 })
 
 
+
 export default function ApplicationForm() {
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,13 +57,8 @@ export default function ApplicationForm() {
         ]);
       if (error) {
         console.error('Error inserting data into Supabase', error);
-      } else if (data) {
+      } else {
         console.log('Data inserted successfully', data);
-        const applicationId = (data as { id: number }[])[0].id;
-        router.push({
-          pathname: '/chat',
-          query: { applicationId}
-        })
       }
     } else {
       console.error('Could not retrieve the current applicant count')
