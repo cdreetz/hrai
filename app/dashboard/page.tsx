@@ -26,6 +26,7 @@ import Chat from "@/components/chat";
 import Settings from "@/components/Settings";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { AddJobButton } from '@/components/addjob';
 
 //async function getData(): Promise<Payment[]> {
 //  return [
@@ -112,6 +113,7 @@ async function DashboardTabs() {
       </TabsContent>
       <TabsContent value="Jobs">
         <DataTable columns={jobcolumns} data={myJobs} />
+        <AddJobButton />
       </TabsContent>
       <TabsContent value="Applicants">
         <DataTable columns={jobapplicantcolumns} data={await ApplicantListData() || []} />
@@ -166,7 +168,6 @@ export default function Dashboard() {
           Your Dashboard
         </h1>
         <DashboardTabs />
-        <ApplicantListDataExample />
       </div>
     </div>
   );
