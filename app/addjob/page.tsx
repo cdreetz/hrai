@@ -20,62 +20,54 @@ const supabase = createClient()
 
 
 const formSchema = z.object({
-  roletitle: z.string().min(3).max(20),
-  jobhighlights: z.string().min(3).max(100),
-  qualifications: z.string().min(5).max(100),
-  responsibilities: z.string().min(5).max(100),
+  title: z.string().min(3).max(30),
+  highlights: z.string().min(3).max(200),
+  qualifications: z.string().min(5).max(200),
+  responsibilities: z.string().min(5).max(200),
 })
 
 
 
-export default function ApplicationForm() {
+export default function AddJobForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      roletitle: "",
-      jobhighlights: "",
+      title: "",
+      highlights: "",
       qualifications: "",
       responsibilities: "",
       
     },
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { count } = await supabase
-      .from('applicants_table')
-      .select('*', { count: 'exact' })
-      .single();
+    // Convert comma-separated strings to arrays
+    const qualificationsArray = values.qualifications.split(',').map(item => item.trim());
 
-    if (count !== null && count !== undefined) {
-      const nextId = count + 1;
+    const { data, error } = await supabase
+      .from('jobs_table') // Make sure to use the correct table name
+      .insert([
+        {
+          title: values.title,
+          highlights: values.highlights, // Use the converted array
+          qualifications: qualificationsArray, // Use the converted array
+          responsibilities: values.responsibilities, // Use the converted array
+        }
+      ]);
 
-      const { data, error } = await supabase
-        .from('applicants_table')
-        .insert([
-          {
-            id: nextId,
-            role_title: values.roletitle,
-            job_highlights: values.jobhighlights,
-            qualifications: values.qualifications,
-            responsibilities: values.qualifications,
-
-          }
-        ]);
-      if (error) {
-        console.error('Error inserting data into Supabase', error);
-      } else {
-        console.log('Data inserted successfully', data);
-      }
+    if (error) {
+      console.error('Error inserting data into Supabase', error);
     } else {
-      console.error('Could not retrieve the current applicant count')
+      console.log('Data inserted successfully', data);
     }
   }
+  
   return (
     <div className="w-1/2 mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
           control={form.control}
-          name="roletitle"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Role Title</FormLabel>
@@ -91,7 +83,7 @@ export default function ApplicationForm() {
         />
         <FormField
           control={form.control}
-          name="jobhighlights"
+          name="highlights"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Job Highlights</FormLabel>

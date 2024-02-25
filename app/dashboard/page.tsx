@@ -112,7 +112,7 @@ async function DashboardTabs() {
         <DataTable columns={columnsrank} data={rankedPayments} />
       </TabsContent>
       <TabsContent value="Jobs">
-        <DataTable columns={jobcolumns} data={myJobs} />
+        <DataTable columns={jobcolumns} data={await JobListData() || []} />
         <AddJobButton />
       </TabsContent>
       <TabsContent value="Applicants">
@@ -151,6 +151,15 @@ async function ApplicantListData() {
   const { data: applicants } = await supabase.from('applicants_table').select()
   return applicants;
 }
+
+async function JobListData() {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+
+  const { data: jobs } = await supabase.from('jobs_table').select()
+  return jobs;
+}
+
 
 export default function Dashboard() {
   return (

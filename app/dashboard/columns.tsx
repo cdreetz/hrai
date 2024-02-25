@@ -4,10 +4,10 @@ import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export function ButtonLink() {
+export function ButtonLink({ id }: { id: string }) {
   return (
     <Button asChild>
-      <Link href="/job">Job</Link>
+      <Link href={`/job/${id}`}>Job</Link>
     </Button>
   );
 }
@@ -72,13 +72,13 @@ export const jobcolumns: ColumnDef<JobPost>[] = [
     header: "ID",
   },
   {
-    accessorKey: "role",
+    accessorKey: "title",
     header: "Role",
   },
   {
     accessorKey: "link",
     header: "Link",
-    cell: () => <ButtonLink />,
+    cell: ({ row }) => <ButtonLink id={row.original.id} />,
   },
 ]
 

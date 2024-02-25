@@ -28,6 +28,7 @@ const formSchema = z.object({
 
 
 export default function ApplicationForm() {
+  const supabase = createClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,31 +38,22 @@ export default function ApplicationForm() {
     },
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { count } = await supabase
+    const { data, error } = await supabase
       .from('applicants_table')
-      .select('*', { count: 'exact' })
-      .single();
-
-    if (count !== null && count !== undefined) {
-      const nextId = count + 1;
-
-      const { data, error } = await supabase
-        .from('applicants_table')
-        .insert([
-          {
-            id: nextId,
-            first_name: values.firstname,
-            last_name: values.lastname,
-            email: values.email
-          }
-        ]);
-      if (error) {
-        console.error('Error inserting data into Supabase', error);
-      } else {
-        console.log('Data inserted successfully', data);
-      }
+      .insert([
+        {
+          first_name: values.firstname,
+          last_name: values.lastname,
+          email: values.email,
+        }
+      ]);
+  
+    if (error) {
+      console.error('Error inserting data into Supabase', error);
+      // Optionally, update the UI to show an error message to the user
     } else {
-      console.error('Could not retrieve the current applicant count')
+      console.log('Data inserted successfully', data);
+      // Optionally, update the UI to show a success message
     }
   }
   return (
