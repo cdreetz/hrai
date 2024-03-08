@@ -21,9 +21,12 @@ const supabase = createClient()
 
 const formSchema = z.object({
   title: z.string().min(3).max(30),
+  description: z.string().min(3).max(200),
   highlights: z.string().min(3).max(200),
   qualifications: z.string().min(5).max(200),
-  responsibilities: z.string().min(5).max(200),
+  company: z.string().min(3).max(50),
+  tags: z.array(z.string()).min(1), // Assuming tags are required and there's at least one
+  benefitsDescription: z.string().min(5).max(200),
 })
 
 
@@ -35,31 +38,34 @@ export default function AddJobForm() {
       title: "",
       highlights: "",
       qualifications: "",
-      responsibilities: "",
+      description: "",
       
     },
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Convert comma-separated strings to arrays
-    const qualificationsArray = values.qualifications.split(',').map(item => item.trim());
+    const qualificationsArray = values.qualifications.split(',').map((item: string) => item.trim());
 
     const { data, error } = await supabase
-      .from('jobs_table') // Make sure to use the correct table name
-      .insert([
-        {
-          title: values.title,
-          highlights: values.highlights, // Use the converted array
-          qualifications: qualificationsArray, // Use the converted array
-          responsibilities: values.responsibilities, // Use the converted array
-        }
-      ]);
-
-    if (error) {
-      console.error('Error inserting data into Supabase', error);
-    } else {
-      console.log('Data inserted successfully', data);
+    .from('jobs_table')
+    .insert([
+      {
+        title: values.title,
+        description: values.description,
+        summary: values.highlights,
+        qualifications: qualificationsArray,
+        company: values.company,
+        tags: values.tags,
+        benefitsDescription: values.benefitsDescription,
+      }
+    ]);
+      if (error) {
+        alert('Error inserting data into Supabase'); // Provide user feedback on error
+      } else {
+        alert('Data inserted successfully'); // Provide user feedback on success
+        form.reset();
+      }
     }
-  }
   
   return (
     <div className="w-1/2 mx-auto">
@@ -115,7 +121,7 @@ export default function AddJobForm() {
         />
         <FormField
           control={form.control}
-          name="responsibilities"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Responsibilities</FormLabel>
