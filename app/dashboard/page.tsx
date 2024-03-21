@@ -109,7 +109,7 @@ async function DashboardTabs() {
         <TopCards />
         <div style={{marginTop: '10px'}}></div>
         <SecondCards />
-        <DataTable columns={columnsrank} data={rankedPayments} />
+        <DataTable columns={jobapplicantcolumns} data={await ApplicantListData() || []} />
       </TabsContent>
       <TabsContent value="Jobs">
         <DataTable columns={jobcolumns} data={await JobListData() || []} />
