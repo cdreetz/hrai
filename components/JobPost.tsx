@@ -9,9 +9,8 @@ import { Badge } from "@/components/ui/badge"
 
 interface Job {
   title: string;
-  company: string;
   tags: string[];
-  summary: string;
+  highlights: string;
   requirements: string[];
   description: string;
   benefitsDescription: string;
@@ -23,7 +22,6 @@ export default function JobPost({ job }: { job: Job }) {
       <div className="flex justify-between items-start mb-4 border-b border-gray-200 pb-4">
         <div>
           <h2 className="text-2xl font-bold">{job.title}</h2>
-          <p className="text-sm text-gray-500">{job.company}</p>
         </div>
       </div>
       <div className="flex items-center space-x-2 my-4 border-b border-gray-200 pb-4">
@@ -33,7 +31,7 @@ export default function JobPost({ job }: { job: Job }) {
       </div>
       <div className="my-4 border-b border-gray-200 pb-4">
         <h3 className="text-lg font-semibold">Job highlights</h3>
-        <p className="text-sm text-gray-500">{job.summary}</p>
+        <p className="text-sm text-gray-500">{job.highlights}</p>
       </div>
       <div className="my-4 border-b border-gray-200 pb-4">
         <h4 className="font-semibold">Qualifications</h4>

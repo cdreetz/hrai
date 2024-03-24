@@ -3,10 +3,10 @@ import React from 'react';
 import JobPost from '../../../components/JobPost';
 import { Button } from '@/components/ui/button';
 import Link from "next/link";
-import { createClient } from '@/utils/supabase/client'; 
+import { createClient } from '@/utils/supabase/server'; 
+import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation';
 
-const supabase = createClient();
 
 interface Job {
   id: number;
@@ -33,34 +33,26 @@ function ButtonLink() {
   );
 }
 
-export async function generateStaticParams() {
-  const { data: jobs } = await supabase
+export function generateStaticParams() {
+  return [{ id: '1'}]
+}
+
+export default async function Job({ params }) {
+  const { id } = params;
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const response = await supabase
     .from('jobs_table')
-    .select('id')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  return (jobs || []).map(({ id }) => ({
-    params: {
-      id: id.toString(),
-    }
-  }))
-}
-
-export default async function Job({ params: { id } }: { params: { id: string } }) {
-  const { data: job } = await supabase
-  .from('jobs_table')
-  .select().match({ id })
-  .single()
-
-  if (!job) {
-    notFound()
+  // Check if the data is fetched successfully before passing it to the component
+  if (response.error === null && response.data) {
+    return <JobPost job={response.data} />;
+  } else {
+    // Handle the case where data is not available or an error occurred
+    return <div>Error fetching job details.</div>;
   }
-
-  //return <JobPost job={job} />
-  //return <pre>{JSON.stringify(job, null, 2)}</pre>
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <JobPost job={job} />
-      <ButtonLink />
-    </div>
-  )
 }
+
