@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from '@/utils/supabase/server'; 
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation';
+import ApplicationForm from '../../../components/apply';
 
 
 interface Job {
@@ -49,7 +50,12 @@ export default async function Job({ params }) {
 
   // Check if the data is fetched successfully before passing it to the component
   if (response.error === null && response.data) {
-    return <JobPost job={response.data} />;
+    return (
+      <>
+        <JobPost job={response.data} />
+        <ApplicationForm jobId={id}/>
+      </>
+    );
   } else {
     // Handle the case where data is not available or an error occurred
     return <div>Error fetching job details.</div>;
