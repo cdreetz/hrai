@@ -2,6 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,6 +19,18 @@ import {
 //import AuthButton from '@/components/authButton'
 
 export default function Navigation() {
+  const supabase = createClient();
+  const router = useRouter();
+  // logout handler
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      router.push("/");
+    } else {
+      console.error("Logout failed:", error.message);
+    }
+  };
+
   return (
     <div style={{backgroundColor: 'white'}}>
       <NavigationMenu orientation="vertical">
@@ -33,6 +48,9 @@ export default function Navigation() {
                 Dashboard
               </NavigationMenuLink>
             </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem as="button" onClick={handleLogout} style={{ cursor: 'pointer', fontSize: '12px' }}>
+            Logout
           </NavigationMenuItem>
        </NavigationMenuList>
       </NavigationMenu>

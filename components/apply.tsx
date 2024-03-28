@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/utils/supabase/client";
+import UploadResume from "@/components/uploadresume"
 
 
 
@@ -53,6 +54,7 @@ export default function ApplicationForm({ jobId }: { jobId?: number }) {
       // Optionally, update the UI to show an error message to the user
     } else {
       console.log('Data inserted successfully', data);
+      form.reset();
       // Optionally, update the UI to show a success message
     }
   }

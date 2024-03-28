@@ -16,7 +16,6 @@ import { Input } from "@/components/ui/input"
 import { createClient } from "@/utils/supabase/client";
 
 
-const supabase = createClient()
 
 
 const formSchema = z.object({
