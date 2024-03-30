@@ -1,11 +1,12 @@
 // /components/uploadresume.tsx
 'use client'
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/client";
+
 
 export default function UploadResume() {
   const [uploading, setUploading] = useState(false);
@@ -13,7 +14,7 @@ export default function UploadResume() {
 
   const supabase = createClient();
 
-  const handleFileChange = async (event) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     try{
       setUploading(true);
 

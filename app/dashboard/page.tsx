@@ -156,7 +156,15 @@ async function JobListData() {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const { data: jobs } = await supabase.from('jobs_table').select()
+  const { data: { user } = {} } = await supabase.auth.getUser()
+
+  const userId = user?.id || "0";
+
+  const { data: jobs } = await supabase
+    .from('jobs_table')
+    .select()
+    .eq('user_id', userId)
+
   return jobs;
 }
 

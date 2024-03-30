@@ -1,6 +1,7 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import { useState  } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button"
 import {
@@ -14,8 +15,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/utils/supabase/client";
-import UploadResume from "@/components/uploadresume"
-
 
 
 
@@ -23,11 +22,15 @@ const formSchema = z.object({
   firstname: z.string().min(3).max(20),
   lastname: z.string().min(3).max(30),
   email: z.string().min(5).max(30),
+  resume: z.instanceof(File).optional(),
 })
 
 
 
 export default function ApplicationForm({ jobId }: { jobId?: number }) {
+  const [uploading, setUploading] = useState(false);
+  // const cookieStore = cookies()
+  // const supabase = createClient(cookieStore);
   const supabase = createClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,9 +38,32 @@ export default function ApplicationForm({ jobId }: { jobId?: number }) {
       firstname: "",
       lastname: "",
       email: "",
+      resume: undefined,
     },
-  })
+  });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setUploading(true);
+    let resumeUrl = null;
+
+    if (values.resume) {
+      const file = values.resume;
+      const fileExtension = file.name.split('.').pop();
+      const resumePath = `public/${values.email}_resume.${fileExtension}`;
+      const { error: uploadError } = await supabase
+        .storage
+        .from('applicant_files')
+        .upload(resumePath, file);
+
+      if (uploadError) {
+        console.error('Error uploading resume', uploadError);
+        setUploading(false);
+        return;
+      }
+
+      resumeUrl = resumePath;
+    }
+
     const { data, error } = await supabase
       .from('applicants_table')
       .insert([
@@ -46,18 +72,20 @@ export default function ApplicationForm({ jobId }: { jobId?: number }) {
           last_name: values.lastname,
           email: values.email,
           job_id: jobId,
+          resume_url: resumeUrl,
         }
       ]);
+
+    setUploading(false);
   
     if (error) {
       console.error('Error inserting data into Supabase', error);
-      // Optionally, update the UI to show an error message to the user
     } else {
       console.log('Data inserted successfully', data);
       form.reset();
-      // Optionally, update the UI to show a success message
     }
   }
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mt-4">
       <div className="mx-auto">
@@ -111,7 +139,33 @@ export default function ApplicationForm({ jobId }: { jobId?: number }) {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <FormField
+            control={form.control}
+            name="resume"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Resume</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    disabled={uploading}
+                    onChange={(e) => {
+                      if (e.target.files?.[0]) {
+                        field.onChange(e.target.files[0]);
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Please upload your resume.
+                </FormDescription>
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={uploading}>
+            {uploading ? 'Submitting...' : 'Submit'}
+          </Button>
           </form>
         </Form>
       </div>

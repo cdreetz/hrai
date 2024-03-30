@@ -49,7 +49,7 @@ export default function Navigation() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-          <NavigationMenuItem as="button" onClick={handleLogout} style={{ cursor: 'pointer', fontSize: '12px' }}>
+          <NavigationMenuItem  onClick={handleLogout} style={{ cursor: 'pointer', fontSize: '12px' }}>
             Logout
           </NavigationMenuItem>
        </NavigationMenuList>

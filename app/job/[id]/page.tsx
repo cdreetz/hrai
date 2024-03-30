@@ -1,11 +1,8 @@
 // pages/jobs/[id].js
+'use client'
 import React from 'react';
 import JobPost from '../../../components/JobPost';
-import { Button } from '@/components/ui/button';
-import Link from "next/link";
-import { createClient } from '@/utils/supabase/server'; 
-import { cookies } from 'next/headers'
-import { notFound } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client'; 
 import ApplicationForm from '../../../components/apply';
 
 
@@ -25,40 +22,35 @@ interface Job {
 interface JobPageProps {
   job: Job | null;
 }
-
-function ButtonLink() {
-  return (
-    <Button asChild>
-      <Link href="/apply">Apply Here</Link>
-    </Button>
-  );
+interface Params {
+  id: number;
 }
 
-export function generateStaticParams() {
-  return [{ id: '1'}]
-}
-
-export default async function Job({ params }) {
+export default async function Job({ params }: { params: Params }) {
   const { id } = params;
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   const response = await supabase
     .from('jobs_table')
     .select('*')
     .eq('id', id)
     .single();
 
-  // Check if the data is fetched successfully before passing it to the component
-  if (response.error === null && response.data) {
+
+  if (response.error) {
+    console.error('Error fetching jobs details:', response.error.message);
+    return <div>Error fetching job details: {response.error.message}</div>;
+  }
+
+  if (response.data) {
     return (
       <>
         <JobPost job={response.data} />
-        <ApplicationForm jobId={id}/>
+        <ApplicationForm jobId={id} />
       </>
     );
   } else {
-    // Handle the case where data is not available or an error occurred
-    return <div>Error fetching job details.</div>;
+    return <div>Job details not found.</div>
   }
 }
+
 
