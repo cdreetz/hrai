@@ -1,6 +1,5 @@
 // pages/jobs/[id].js
 'use client'
-import React from 'react';
 import JobPost from '../../../components/JobPost';
 import { createClient } from '@/utils/supabase/client'; 
 import ApplicationForm from '../../../components/apply';
