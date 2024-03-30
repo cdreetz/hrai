@@ -1,8 +1,8 @@
 // pages/jobs/[id].js
-'use client'
 import JobPost from '../../../components/JobPost';
-import { createClient } from '@/utils/supabase/client'; 
 import ApplicationForm from '../../../components/apply';
+import { createClient } from '@/utils/supabase/server'; 
+import { cookies } from 'next/headers';
 
 
 interface Job {
@@ -27,7 +27,8 @@ interface Params {
 
 export default async function Job({ params }: { params: Params }) {
   const { id } = params;
-  const supabase = createClient();
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const response = await supabase
     .from('jobs_table')
     .select('*')
@@ -51,5 +52,4 @@ export default async function Job({ params }: { params: Params }) {
     return <div>Job details not found.</div>
   }
 }
-
 

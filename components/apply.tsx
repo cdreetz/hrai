@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { useState  } from "react";
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/utils/supabase/client";
+//import { createClient } from "@/utils/supabase/server";
+//import { cookies } from "next/headers";
 
 
 
@@ -29,8 +31,8 @@ const formSchema = z.object({
 
 export default function ApplicationForm({ jobId }: { jobId?: number }) {
   const [uploading, setUploading] = useState(false);
-  // const cookieStore = cookies()
-  // const supabase = createClient(cookieStore);
+  //const cookieStore = cookies()
+  //const supabase = createClient(cookieStore);
   const supabase = createClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
