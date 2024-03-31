@@ -26,6 +26,7 @@ export default function Navigation() {
     const { error } = await supabase.auth.signOut();
     if (!error) {
       router.push("/");
+      router.refresh();
     } else {
       console.error("Logout failed:", error.message);
     }

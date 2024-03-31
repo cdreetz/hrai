@@ -106,7 +106,7 @@ export default function Chat() {
 
   return (
     <div>
-      <div className="h-screen flex flex-col items-center w-full">
+      <div className="h-screen flex flex-col items-center w-4/5 h-3/4 mx-auto">
         <ScrollAreaDemo items={items} />
         <TextAreaComponent onSubmit={handleSubmit} textValue={textValue} setTextValue={setTextValue} />
       </div>
