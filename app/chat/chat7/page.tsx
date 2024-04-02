@@ -21,13 +21,21 @@ export default function ChatPage() {
     setMessages(initialMessages);
   }, [setMessages]);
 
+  // Adapted handleSubmit to work with KeyboardEvent
+  const handleKeyboardSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Prevent default to stop from adding a new line
+      // Use the original handleSubmit, simulate the form submission event
+      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+    }
+  };
   return  (
-    <div className="flex flex-col h-screen items-center mx-auto w-4/5">
-      <ScrollArea className="h-1/3 w-full rounded-md border overflow-y-auto" >
+    <div className="flex flex-col h-screen items-center mx-auto w-4/5 pb-16">
+      <ScrollArea className="flex-1 w-full rounded-md border overflow-y-auto" >
         <div className="p-4">
           <h4 className="self-start mb-4 text-sm font-medium leading-none">Hrai Chat</h4>
           <Separator className="my-2 border-b" />
-          <div className="flex gap-2 flex-col-reverse">
+          <div className="flex gap-2 flex-col">
             {messages.filter(m => m.role !== 'system').map(m => (
               <React.Fragment key={m.id}>
                 <div className="text-sm">
@@ -39,20 +47,16 @@ export default function ChatPage() {
           </div>
         </div>
       </ScrollArea>
-      <div className="grid w-full gap-2 mt-2">
+      <div className='flex flex-col w-full mt-4'>
         <Textarea
           placeholder="Type message here.."
           value={input}
           onChange={handleInputChange}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmit(e);
-            }
-          }}
+          onKeyDown={handleKeyboardSubmit}
         />
-        <Button onClick={handleSubmit}>Send Message</Button>
+        <Button onClick={() => handleSubmit()}>Send Message</Button>
       </div>
     </div>
   )
+
 }
