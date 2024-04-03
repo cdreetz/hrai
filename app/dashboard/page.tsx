@@ -104,10 +104,13 @@ function SettingsTab() {
   )
 }
 
+// <TabsList className="flex justify-between sm:grid sm:grid-cols-5 w-full"></TabsList>
+// <TabsList className="grid w-[800px] grid-cols-5"></TabsList>
+
 async function DashboardTabs() {
   return (
     <Tabs defaultValue="Overview">
-      <TabsList className="grid w-[800px] grid-cols-5">
+      <TabsList className="flex justify-between sm:grid sm:grid-cols-5 w-full">
         <TabsTrigger value="Overview">Overview</TabsTrigger>
         <TabsTrigger value="Jobs">Jobs</TabsTrigger>
         <TabsTrigger value="Applicants">Applicants</TabsTrigger>
