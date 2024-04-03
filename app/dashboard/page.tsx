@@ -48,6 +48,14 @@ interface DataCardProps {
   minWidth?: string;
 }
 
+interface DataCardProps {
+  title: string;
+  description: string;
+  content: string;
+  minWidth?: string;
+  className?: string; // Add this line
+}
+
 function DataCard({ title, description, content, minWidth = '250px' }: DataCardProps) {
   return (
     <Card className={`min-w-[${minWidth}] flex-grow`}>
@@ -61,11 +69,12 @@ function DataCard({ title, description, content, minWidth = '250px' }: DataCardP
 }
 
 function TopCards() {
+  const cardStyle = "min-w-[250px] w-full sm:w-1/3 h-40";
   return (
-    <div className="flex flex-row justify-center items-center space-x-4 w-full">
-      <DataCard title="Total Applicants" description="All applicants before filtering." content="1000" />
-      <DataCard title="Total Prescreened" description="All applicants who completed prescreening" content="500" />
-      <DataCard title="Average Score" description="Average prescreening score" content="92" />
+    <div className="flex flex-col sm:flex-row justify-center items-stretch space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 w-full">
+      <DataCard title="Total Applicants" description="All applicants before filtering." content="1000" className={cardStyle} />
+      <DataCard title="Total Prescreened" description="All applicants who completed prescreening" content="500" className={cardStyle} />
+      <DataCard title="Average Score" description="Average prescreening score" content="92" className={cardStyle} />
     </div>
   );
 }
