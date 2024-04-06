@@ -27,6 +27,8 @@ import Settings from "@/components/Settings";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { AddJobButton } from '@/components/addjob';
+import ChatComponent from '@/components/newchat';
+import { Message } from 'ai/react';
 
 //async function getData(): Promise<Payment[]> {
 //  return [
@@ -91,7 +93,7 @@ function SecondCards() {
 function ChatTab() {
   return (
     <div className="flex items-center">
-      <Chat />
+      <ChatComponent initialMessages={[]} />
     </div>
   )
 }
@@ -192,7 +194,6 @@ export default function Dashboard() {
         justifyContent: 'center',
         margin: '0 auto',
         gap: '10px',
-        paddingTop: '20px'
       }}>
         <h1 style={{fontSize: '3em', fontWeight: 'bold'}}>
           Your Dashboard

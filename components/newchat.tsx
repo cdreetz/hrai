@@ -1,0 +1,58 @@
+'use client'
+import React, { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Message, useChat } from "ai/react";
+
+interface ChatComponentProps {
+  initialMessages: Message[];
+}
+
+const ChatComponent: React.FC<ChatComponentProps> = ({ initialMessages }) => {
+  const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat();
+
+  useEffect(() => {
+    setMessages(initialMessages);
+  }, [setMessages, initialMessages]);
+
+  const handleKeyboardSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-screen items-center mx-auto w-4/5 pb-16">
+      <ScrollArea className="flex-1 w-full rounded-md border overflow-y-auto">
+        <div className="p-4">
+          <h4 className="self-start mb-4 text-sm font-medium leading-none">Hrai Chat</h4>
+          <Separator className="my-2 border-b" />
+          <div className="flex gap-2 flex-col">
+            {messages.filter(m => m.role !== 'system').map(m => (
+              <React.Fragment key={m.id}>
+                <div className="text-sm">
+                  <div className="font-bold">{m.role === 'user' ? 'You' : 'Assistant'}:</div>
+                  <div className="m-2">{m.content}</div>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </ScrollArea>
+      <div className='flex flex-col w-full mt-4'>
+        <Textarea
+          placeholder="Type message here.."
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyboardSubmit}
+        />
+        <Button onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}>Send Message</Button>
+      </div>
+    </div>
+  );
+};
+
+export default ChatComponent;
