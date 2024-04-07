@@ -54,7 +54,8 @@ export default function ChatPage() {
           onChange={handleInputChange}
           onKeyDown={handleKeyboardSubmit}
         />
-<Button onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}>Send Message</Button>      </div>
+        <Button onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}>Send Message</Button>      
+      </div>
     </div>
   )
 

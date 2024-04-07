@@ -43,10 +43,10 @@ export default async function Job({ params }: { params: Params }) {
 
   if (response.data) {
     return (
-      <>
+      <div style={{ marginTop: '60px' }}>
         <JobPost job={response.data} />
         <ApplicationForm jobId={id} />
-      </>
+      </div>
     );
   } else {
     return <div>Job details not found.</div>

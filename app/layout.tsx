@@ -13,17 +13,20 @@ export const metadata: Metadata = {
 function HeaderBar() {
   return (
     <>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        borderBottom: '1px solid #000'
-      }}>
+      <div className="flex w-full border-b">
         <Navigation />
       </div>
-      <div style={{padding: '30px'}}></div>
     </>
   )
 }
+
+
+//      <div style={{
+//        display: 'flex',
+//        justifyContent: 'flex-end',
+//        borderBottom: '1px solid #000'
+ 
+
 
 export default function RootLayout({
   children,
@@ -33,8 +36,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <HeaderBar />
-        {children}
+        <div className="h-screen flex flex-col">
+          <HeaderBar />
+          {children}
+        </div>
       </body>
     </html>
   );

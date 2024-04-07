@@ -192,7 +192,7 @@ export default function Dashboard() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        margin: '0 auto',
+        margin: '60px auto 0 auto', // Added top margin of 20px
         gap: '10px',
       }}>
         <h1 style={{fontSize: '3em', fontWeight: 'bold'}}>

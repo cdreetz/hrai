@@ -83,7 +83,7 @@ export default function AddJobForm() {
     }
   
   return (
-    <div className="w-1/2 mx-auto mb-4">
+    <div className="w-1/2 mx-auto mb-4 mt-20">
       <Form {...form}>
       <form onSubmit={(e) => { e.preventDefault(); form.handleSubmit(onSubmit)(e); }} className="space-y-8">
           <FormField

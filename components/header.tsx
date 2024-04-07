@@ -33,8 +33,8 @@ export default function Navigation() {
   };
 
   return (
-    <div style={{backgroundColor: 'white'}}>
-      <NavigationMenu orientation="vertical">
+    <div className="bg-white flex flex-row gap-4">
+      <NavigationMenu orientation="vertical" className="flex flex-row gap-4">
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/" legacyBehavior passHref>

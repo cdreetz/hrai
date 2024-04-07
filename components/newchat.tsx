@@ -25,8 +25,8 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ initialMessages }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen items-center mx-auto w-4/5 pb-16">
-      <ScrollArea className="flex-1 w-full rounded-md border overflow-y-auto">
+    <div className="flex flex-col h-full items-center mx-auto w-5/6 mb-4">
+      <ScrollArea className="flex-1 h-4/5 w-full rounded-md border overflow-y-auto">
         <div className="p-4">
           <h4 className="self-start mb-4 text-sm font-medium leading-none">Hrai Chat</h4>
           <Separator className="my-2 border-b" />
@@ -42,15 +42,14 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ initialMessages }) => {
           </div>
         </div>
       </ScrollArea>
-      <div className='flex flex-col w-full mt-4'>
+      <div className="mt-4" />
         <Textarea
           placeholder="Type message here.."
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyboardSubmit}
         />
-        <Button onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}>Send Message</Button>
-      </div>
+        <Button className="mt-2 w-full" onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}>Send Message</Button>
     </div>
   );
 };
