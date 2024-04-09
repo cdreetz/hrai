@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { DetailedHTMLFactory, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -23,9 +23,11 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ initialMessages }) => {
   }, [setMessages, initialMessages]);
 
   const handleSubmit = async (event?: React.SyntheticEvent) => {
-    event?.preventDefault();
+    if (event) {
+      event?.preventDefault();
+      originalHandleSubmit(event as React.FormEvent<HTMLFormElement>);
+    }
 
-    originalHandleSubmit(event);
 
     const { error } = await supabase
       .from('conversations_table')
