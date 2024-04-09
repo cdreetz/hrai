@@ -127,7 +127,9 @@ async function DashboardTabs() {
       </TabsContent>
       <TabsContent value="Jobs">
         <DataTable columns={jobcolumns} data={await JobListData() || []} />
-        <AddJobButton />
+        <div>
+          <AddJobButton />
+        </div>
       </TabsContent>
       <TabsContent value="Applicants">
         <DataTable columns={jobapplicantcolumns} data={await ApplicantListData() || []} />
@@ -192,7 +194,7 @@ export default function Dashboard() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        margin: '60px auto 0 auto', // Added top margin of 20px
+        margin: '20px auto 0 auto', // Added top margin of 20px
         gap: '10px',
       }}>
         <h1 style={{fontSize: '3em', fontWeight: 'bold'}}>

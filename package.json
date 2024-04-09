@@ -22,7 +22,7 @@
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.8",
     "@tanstack/react-table": "^8.11.8",
-    "ai": "^2.2.33",
+    "ai": "^2.2.37",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.3.1",
