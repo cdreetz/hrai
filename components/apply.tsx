@@ -17,6 +17,12 @@ import { Input } from "@/components/ui/input"
 import { createClient } from "@/utils/supabase/client";
 //import { createClient } from "@/utils/supabase/server";
 //import { cookies } from "next/headers";
+// re_DgJFTJiV_JAbi1183mBU1tM3yheEGRPTT
+
+import { Resend } from 'resend';
+
+const resend = new Resend('re_DgJFTJiV_JAbi1183mBU1tM3yheEGRPTT');
+
 
 
 
@@ -78,14 +84,36 @@ export default function ApplicationForm({ jobId }: { jobId?: number }) {
         }
       ]);
 
-    setUploading(false);
-  
     if (error) {
       console.error('Error inserting data into Supabase', error);
+      setUploading(false);
     } else {
       console.log('Data inserted successfully', data);
+
+      try {
+        const emailResponse = await fetch('/api/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: values.email,
+            firstName: values.firstname,
+            jobId: jobId,
+          }),
+        });
+
+        if (!emailResponse.ok) {
+          throw new Error('Failed to send confirmation');
+        }
+        console.log('Confirmation email sent.');
+      } catch (emailError) {
+        console.error('Error sending confirmation email.', emailError);
+      }
       form.reset();
+      setUploading(false);
     }
+
   }
 
   return (
