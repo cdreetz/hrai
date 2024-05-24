@@ -10,7 +10,6 @@
 //
 // select conversation_id from conversations_table where appicant_id = applicants_table.id
 
-import React from 'react';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,11 +21,11 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import Chat from "@/components/chat";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import ChatComponent from '@/components/newchat';
-import { Message } from 'ai/react';
+//import { createClient } from "@/utils/supabase/client";
 import { DataCard } from "../dashboard/page";
+import React, { useEffect, useState } from "react";
+import ReadOnlyChatComponent from "@/components/readonlychat";
+
 
 
 function ApplicantDetailsCard() {
@@ -43,6 +42,7 @@ export default function ApplicantDetailsPage() {
   return (
     <div className='flex flex-col justify-center mt-20 mx-10 gap-5 w-9/10'>
       <ApplicantDetailsCard />
+      <ReadOnlyChatComponent />
     </div>
   )
 }
