@@ -58,7 +58,7 @@ interface DataCardProps {
   className?: string; // Add this line
 }
 
-function DataCard({ title, description, content, minWidth = '250px' }: DataCardProps) {
+export function DataCard({ title, description, content, minWidth = '250px' }: DataCardProps) {
   return (
     <Card className={`min-w-[${minWidth}] flex-grow`}>
       <CardHeader>
