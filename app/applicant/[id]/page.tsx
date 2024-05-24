@@ -6,7 +6,7 @@ interface Params {
   id: string;
 }
 
-const ApplicantPage2: React.FC<{messages: any}> = ({messages}) => {
+const ReadOnlyChat: React.FC<{messages: any}> = ({messages}) => {
   return (
     <div className="flex gap-2 flex-col m-10">
       {messages ? JSON.parse(messages).filter(m => m.role !== 'system').map(m => (
@@ -21,7 +21,7 @@ const ApplicantPage2: React.FC<{messages: any}> = ({messages}) => {
   )
 }
 
-export default async function fetchConversationData({ params }: { params: Params }) {
+export default async function applicantChatData({ params }: { params: Params }) {
   const { id } = params;
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -41,7 +41,7 @@ export default async function fetchConversationData({ params }: { params: Params
     return (
       <>
         <div className='mt-20 mb-5 h-full'>
-          <ApplicantPage2 messages={messages} />
+          <ReadOnlyChat messages={messages} />
         </div>
       </>
     )

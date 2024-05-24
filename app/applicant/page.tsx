@@ -1,48 +1,35 @@
-// app/page.tsx
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers'
+import React from 'react';
+import ReadOnlyChat from '@/components/readonlychat';
 
-// applicant page to view details of any given applicant
-// should have the applicants name, email, resume link, job they applied to, and their prescreening conversation
-// should essentially be a query like 
-//
-// select * from applicants_table where id = id;
-//
-// select title from jobs_table where id = applicants_table.id 
-//
-// select conversation_id from conversations_table where appicant_id = applicants_table.id
-
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import Chat from "@/components/chat";
-//import { createClient } from "@/utils/supabase/client";
-import { DataCard } from "../dashboard/page";
-import React, { useEffect, useState } from "react";
-import ReadOnlyChatComponent from "@/components/readonlychat";
-
-
-
-function ApplicantDetailsCard() {
-  const cardStyle = "min-w-[250px] w-full sm:w-1/3 h-40"
-  return (
-    <div className="flex flex-col sm:flex-row justify-center items-stretch space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 w-full">
-      <DataCard title="Applicant Name" description='Full Name of Applicant' content='Content' className={cardStyle} />
-      <DataCard title="Applied Job" description='The job title applied' content='Content' className={cardStyle} />
-    </div>
-  )
+interface Params {
+  id: string;
 }
 
-export default function ApplicantDetailsPage() {
-  return (
-    <div className='flex flex-col justify-center mt-20 mx-10 gap-5 w-9/10'>
-      <ApplicantDetailsCard />
-      <ReadOnlyChatComponent />
-    </div>
-  )
+
+export default async function applicantChatData() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const response = await supabase
+    .from('conversations_table')
+    .select('messages')
+    .eq('conversation_id', '6761f91d-d313-48c7-af43-c97107940bf9')
+    .single();
+
+  if (response.error) {
+    console.error('Error', response.error.message)
+    return <div>Error fetching job details</div>;
+  }
+  
+  if (response.data) {
+    const { messages } = response.data;
+    return (
+      <>
+        <div className='mt-20 mb-5 h-full'>
+          <ReadOnlyChat messages={messages} />
+        </div>
+      </>
+    )
+  } 
 }
