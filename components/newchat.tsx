@@ -53,8 +53,8 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ initialMessages }) => {
   };
 
   return (
-    <div className="flex flex-col h-full items-center mx-auto w-5/6">
-      <ScrollArea className="flex-1 h-4/5 w-full rounded-md border overflow-y-auto">
+    <div className="flex flex-col h-full items-center mx-auto w-full">
+      <ScrollArea className="flex-1 w-full rounded-md border overflow-y-auto">
         <div className="p-4">
           <h4 className="self-start mb-4 text-sm font-medium leading-none">Hrai Chat</h4>
           <Separator className="my-2 border-b" />

@@ -29,6 +29,8 @@ import { cookies } from "next/headers";
 import { AddJobButton } from '@/components/addjob';
 import ChatComponent from '@/components/newchat';
 import { Message } from 'ai/react';
+import '@/public/styles.css';
+
 
 //async function getData(): Promise<Payment[]> {
 //  return [
@@ -91,9 +93,13 @@ function SecondCards() {
 }
 
 function ChatTab() {
+  const initialMessages = (): Message[] => [
+    { id: 'system-0', role: "system", content: `You are a helpful assistant tasked with being the assistant for a HR/talent platform.  When users ask you questions, do not assume anything as it is important not to give false information.  Ask clarifying questions instead when necessary.`},
+    { id: 'assistant-0', role: "assistant", content: "Hey! What can I help you with?"},
+  ];
   return (
-    <div className="flex items-center">
-      <ChatComponent initialMessages={[]} />
+    <div className="flex flex-col items-center h-3/4 w-9/10 mx-2">
+      <ChatComponent initialMessages={initialMessages()} />
     </div>
   )
 }
@@ -111,7 +117,7 @@ function SettingsTab() {
 
 async function DashboardTabs() {
   return (
-    <Tabs defaultValue="Overview">
+    <Tabs defaultValue="Overview" className='h-full overflow-y-auto'>
       <TabsList className="flex justify-between sm:grid sm:grid-cols-5 w-full">
         <TabsTrigger value="Overview">Overview</TabsTrigger>
         <TabsTrigger value="Jobs">Jobs</TabsTrigger>
@@ -134,7 +140,7 @@ async function DashboardTabs() {
       <TabsContent value="Applicants">
         <DataTable columns={jobapplicantcolumns} data={await ApplicantListData() || []} />
       </TabsContent>
-      <TabsContent value="Chat">
+      <TabsContent value="Chat" className='custom-chat-tab'>
         <ChatTab />
       </TabsContent>
       <TabsContent value="Settings">
@@ -188,9 +194,10 @@ async function JobListData() {
 
 export default function Dashboard() {
   return (
-    <div>
+    <div className='h-full'>
       <div style={{
         width: '90%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

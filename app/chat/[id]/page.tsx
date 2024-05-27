@@ -32,7 +32,7 @@ export default async function PrescreeningChat({ params }: { params: Params }) {
     const { title, requirements, description } = response.data;
     return (
       <>
-        <div className="mt-20 mb-5 h-full">
+        <div className="mt-20 mb-5 h-full w-5/6 items-center mx-auto">
           <ChatComponent initialMessages={initialMessages(title, requirements, description)} />
         </div>
       </>
