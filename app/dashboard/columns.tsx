@@ -4,10 +4,18 @@ import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export function ButtonLink({ id }: { id: string }) {
+export function JobButtonLink({ id }: { id: string }) {
   return (
     <Button asChild>
       <Link href={`/job/${id}`}>Job</Link>
+    </Button>
+  );
+}
+
+export function ApplicantButtonLink({ id }: { id: string }) {
+  return (
+    <Button asChild>
+      <Link href={`/applicant-details/${id}`}>Details</Link>
     </Button>
   );
 }
@@ -17,6 +25,7 @@ export type Applicant = {
   amount: number
   status: string 
   email: string
+  link: string
 }
 
 export const applicantcolumns: ColumnDef<Applicant>[] = [
@@ -39,6 +48,7 @@ export type JobApplicant = {
   first_name: string
   last_name: string
   email: string
+  link: string
 }
 
 export const jobapplicantcolumns: ColumnDef<Applicant>[] = [
@@ -58,6 +68,11 @@ export const jobapplicantcolumns: ColumnDef<Applicant>[] = [
     accessorKey: "email",
     header: "Email",
   },
+  {
+    accessorKey: "link",
+    header: "Link",
+    cell: ({ row }) => <ApplicantButtonLink id={row.original.id} />,
+  }
 ]
 
 export type JobPost = {
@@ -78,7 +93,7 @@ export const jobcolumns: ColumnDef<JobPost>[] = [
   {
     accessorKey: "link",
     header: "Link",
-    cell: ({ row }) => <ButtonLink id={row.original.id} />,
+    cell: ({ row }) => <JobButtonLink id={row.original.id} />,
   },
 ]
 
