@@ -1,12 +1,10 @@
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers'
-import React from 'react';
 import ReadOnlyChat from '@/components/readonlychat';
 
 interface Params {
   id: string;
 }
-
 
 export default async function applicantChatData() {
   const cookieStore = cookies();
