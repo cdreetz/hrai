@@ -14,20 +14,16 @@ export default function LoginPage() {
 
     if (formType === 'login') {
       login(form).then(() => {
-        // Handle login success, e.g., redirect or display a success message
         router.push('/dashboard');
         console.log('Login successful');
       }).catch((error) => {
-        // Handle login error, e.g., display an error message
         console.error('Login failed', error);
       });
     } else if (formType === 'signup') {
       signup(form).then(() => {
-        // Handle signup success
         console.log('Signup successful');
         router.push('/dashboard');
       }).catch((error) => {
-        // Handle signup error
         console.error('Signup failed', error);
       });
     }

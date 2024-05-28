@@ -51,7 +51,11 @@ export default function Navigation() {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem onClick={handleLogout} style={{ cursor: 'pointer', fontSize: '12px' }}>
-            Logout
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()} style={{fontSize: '12px'}}>
+                Logout
+              </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
        </NavigationMenuList>
       </NavigationMenu>
