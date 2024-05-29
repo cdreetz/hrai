@@ -28,17 +28,17 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="w-full lg:w-auto lg:mx-12 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div className="w-full lg:w-auto mx-4 lg:mx-16 2xl:mx-12 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-full gap-14 border-gray-300 shadow-md rounded-lg p-14 sm:p-12 items-center">
-          <div className="grid gap-2 text-center">
+        <div className="mx-auto grid w-full max-w-[540px] gap-14 border-gray-300 shadow-2xl rounded-lg p-20 sm:p-16 items-center">
+          <div className="grid gap-4 text-center">
             <h1 className="text-3xl font-bold">Create your Hrai account</h1>
             <p className="text-balance text-muted-foreground">
               Enter your email below to create to your account
             </p>
           </div>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
+          <div className="grid gap-6">
+            <div className="grid gap-4">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -47,7 +47,7 @@ export default function SignUpPage() {
                 required
               />
             </div>
-            <div className="grid gap-2">
+            <div className="grid gap-4">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
                 <Link
@@ -63,7 +63,7 @@ export default function SignUpPage() {
               Create account
             </Button>
           </div>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-6 text-center text-sm">
             Already have an account?{" "}
             <Link href="#" className="underline">
               Login
