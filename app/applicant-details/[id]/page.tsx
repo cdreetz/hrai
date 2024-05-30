@@ -74,7 +74,7 @@ import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 import { useRouter } from "next/router"
 
-export function Bread() {
+function Bread() {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Breadcrumb className="hidden md:flex">
@@ -96,7 +96,7 @@ export function Bread() {
   )
 }
 
-export function ProductDetailsCard() {
+function ProductDetailsCard() {
   return (
     <Card x-chunk="dashboard-07-chunk-0">
       <CardHeader>
@@ -174,7 +174,7 @@ interface Params {
   id: number
 }
 
-export async function ScreeningCard({ params }: { params: Params }) {
+async function ScreeningCard({ params }: { params: Params }) {
   const id = Number(params.id);
   console.log(id, "Screening ID");
   const cookieStore = cookies();
@@ -209,7 +209,7 @@ export async function ScreeningCard({ params }: { params: Params }) {
   }
 }
 
-export function ProductStatusCard() {
+function ProductStatusCard() {
   return (
     <Card x-chunk="dashboard-07-chunk-3">
       <CardHeader>
@@ -238,7 +238,7 @@ export function ProductStatusCard() {
 
 
 
-export function ArchiveProductCard() {
+function ArchiveProductCard() {
   return (
     <Card x-chunk="dashboard-07-chunk-5">
       <CardHeader>
