@@ -20,7 +20,7 @@ export default async function PrescreeningChat({ params }: { params: Params }) {
   const response = await supabase
     .from('jobs_table')
     .select('title, requirements, description')
-    .eq('id', id)
+    .eq('job_id', id)
     .single();
 
   if (response.error) {

@@ -76,15 +76,15 @@ export const jobapplicantcolumns: ColumnDef<Applicant>[] = [
 ]
 
 export type JobPost = {
-  id: string
+  job_id: string
   role: string
   link: string
 }
 
 export const jobcolumns: ColumnDef<JobPost>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: "job_id",
+    header: "Job ID",
   },
   {
     accessorKey: "title",
