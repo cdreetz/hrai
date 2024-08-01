@@ -93,7 +93,7 @@ export const jobcolumns: ColumnDef<JobPost>[] = [
   {
     accessorKey: "link",
     header: "Link",
-    cell: ({ row }) => <JobButtonLink id={row.original.id} />,
+    cell: ({ row }) => <JobButtonLink id={row.original.job_id} />,
   },
 ]
 
