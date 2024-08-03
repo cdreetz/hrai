@@ -1,30 +1,37 @@
 // app/signup/page.tsx
 "use client";
-import Image from "next/image"
+import React, { useState } from "react";
 import Link from "next/link"
-import React from "react";
-import { signup } from "@/app/loginaction";
 import { useRouter } from "next/navigation";
+import { signup } from "@/app/loginaction";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
     const form = new FormData(e.target as HTMLFormElement);
 
-    signup(form)
-      .then(() => {
-        console.log("Signup successful");
-        router.push("/dashboard");
-      })
-      .catch((error) => {
-        console.error("Signup failed", error);
-      });
+    try {
+      await signup(form);
+      console.log("Signup successful");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Signup failed", error);
+      setError("Signup failed. Please try again.")
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -37,26 +44,46 @@ export default function SignUpPage() {
               Enter your email below to create to your account
             </p>
           </div>
-          <div className="grid gap-6">
+          <form onSubmit={handleSubmit} className="grid gap-6">
             <div className="grid gap-4">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="m@example.com"
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="grid gap-4">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
-              <Input id="password" type="password" required />
+              <Input 
+                id="password" 
+                name="password"
+                type="password" 
+                required 
+                disabled={isLoading}
+              />
             </div>
-            <Button type="submit" className="w-full">
-              Create account
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account..
+                </>
+              ): (
+                "Create account"
+              )}
             </Button>
-          </div>
+          </form>
           <div className="mt-6 text-center text-sm">
             Already have an account?{" "}
             <Link href="/login" className="underline">

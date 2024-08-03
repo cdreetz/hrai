@@ -18,9 +18,6 @@ interface Job {
   benefitsDescription: string;
 }
 
-interface JobPageProps {
-  job: Job | null;
-}
 interface Params {
   id: number;
 }
@@ -32,7 +29,7 @@ export default async function Job({ params }: { params: Params }) {
   const response = await supabase
     .from('jobs_table')
     .select('*')
-    .eq('id', id)
+    .eq('job_id', id)
     .single();
 
 

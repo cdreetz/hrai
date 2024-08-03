@@ -2,7 +2,7 @@
 "use client";
 import Image from "next/image"
 import Link from "next/link"
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { login } from "./loginaction";
 import { useRouter } from "next/navigation";
@@ -10,24 +10,34 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Form } from "@/components/ui/form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const methods = useForm();
   const { register, handleSubmit, formState: { errors } } = methods;
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
+    setIsLoading(true);
+    setError("");
     const formData = new FormData();
     for (const key in data) {
       formData.append(key, data[key]);
     }
-    login(formData).then(() => {
-      router.push('/dashboard');
+    try {
+      await login(formData);
       console.log('Login successful');
-    }).catch((error) => {
+      router.push('/dashboard');
+    } catch (error) {
       console.error('Login failed', error);
-    });
+      setError("Login failed. Please check your credentials and try again.")
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -39,9 +49,7 @@ export default function LoginPage() {
               Enter your email and password to login 
             </p>
           </div>
-          <Form {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid gap-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
                 <div className="grid gap-4">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -49,8 +57,9 @@ export default function LoginPage() {
                     id="email"
                     type="email"
                     placeholder="m@example.com"
+                    disabled={isLoading}
                   />
-                  {errors.email && <span>This field is required</span>}
+                  {errors.email && <span className="text-red-500 text-sm">{errors.email.message as string}</span>}
                 </div>
                 <div className="grid gap-4">
                   <div className="flex items-center">
@@ -66,17 +75,28 @@ export default function LoginPage() {
                     {...register("password", { required: true })}
                     id="password"
                     type="password"
+                    disabled={isLoading}
                   />
-                  {errors.password && <span>This field is required</span>}
+                  {errors.password && <span className="text-red-500 text-sm">{errors.password.message as string}</span>}
                 </div>
-                <Button type="submit" name="login" className="w-full">
-                  Login
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+                <Button type="submit" name="login" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Logging in..
+                    </>
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
-              </div>
             </form>
-          </Form>
           <div className="mt-6 text-center text-sm">
-            Already have an account?{" "}
+            Do not have an account?{" "}
             <Link href="/signup" className="underline">
               Signup
             </Link>
